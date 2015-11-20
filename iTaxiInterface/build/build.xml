@@ -1,0 +1,428 @@
+<!-- iTaxiInterface Build Configuration
+  Usage:    ant [target] [-Dlabel=releaselabel]...
+
+  Targets:
+    ccompile   - compiles the client java files in the directory "client.src".
+    scompile   - compiles the server java files in the directory "server.src".
+	pcompile   - compiles the server java files in the directory "pfaClient.src".
+    compile    - includes ccompile, scompile and pcompile.
+
+    cdist      - builds client .jar file.
+    CallbookerServerLib - builds common utility jar lib for the server ejbs.
+    OrderEJB - builds Order ejb jar file.
+    OrderEJB2 - builds Order ejb2 jar file (a progressive replacement for OrderEJB).    
+    PfaEJB - builds Pfa ejb jar file.
+    CartEJB" - builds Cart ejb jar file.
+    AddressEJB - builds Address ejb jar file.
+    UserAccountEJB - builds UserAccound ejb jar file.
+
+    sdist      - includes CallbookerServerLib, OrderEJB, PfaEJB, CartEJB, AddressEJB, and UserAccountEJb.
+    dist        - includes cdist and dists
+
+    deploy      - Copy the ejb .jar file to jboss/deploy directory
+    jmxcompile  - Compile JMX services.
+    jmxjar      - Create CallbookerJmx.jar file containing JMX services in
+                  dist/server.
+    jmxdeploy   - Copy the CallbookerJmx.jar file to the JBoss lib/ext directory.
+    init        - creates a timestamp and a "build" directory
+  *
+  * The version control log:
+  * $Log:$
+  *
+  *
+-->
+
+<project name="MyProject" default="dist" basedir="..">
+  <!-- Allow override from local properties file -->
+  <property file="${basedir}/build/.ant.properties" />
+
+
+  <!-- set global properties for this build -->
+  <property name="jboss.home"   value="C:/wildfly-8.2.0.Final"/>
+  <property name="java_home"    value="C:/Program Files (x86)/Java/jdk1.8.0_25"/>
+  
+  <!-- properties for Visual Source Safe (VSS) -->
+  <property name="vss.server"    value="//Ddsvss/LPF/SrcSafe"/>
+  <property name="vss.path"      value="/TaxiProduct/Code/ControlRoom/iTaxiInterface"/>
+  <property name="vss.path.src"      value="${vss.path}/src"/>
+  <property name="vss.path.dist"      value="${vss.path}/dist"/>
+  <property name="vss.path.build"      value="${vss.path}/build"/>
+  <property name="vss.path.lib"      value="${vss.path}/lib"/>	
+	
+  <property name="vss.user"      value="autobuilder"/>
+  <property name="vss.pwd"       value="autobuilder"/>
+  <property name="vss.numdays"   value="-1"/>
+
+  <property name="logfile"       value="buildsummary.txt"/>
+
+  <!-- source properties -->
+  <property name="src.dir"             value="${basedir}/src"/>
+  <!--
+  <property name="webservice.src"	   value="${src.dir}/com/dds/pathfinder/itaxiinterface"/>
+  -->
+  <property name="webservice.src"	   value="${src.dir}"/>
+
+  <!-- classes properties -->
+  <property name="classes.dir"         value="${basedir}/classes"/>
+
+  <!-- jboss deploy directory in local machine-->	
+<property name="jboss.default"   value="${jboss.home}/standalone"/>
+<property name="jboss.deploy"    value="${jboss.default}/deployments"/>
+<!--	
+  <property name="jboss.all"   value="${jboss.home}/server/all"/>
+  <property name="jboss.all.deploy"    value="${jboss.all}/deploy"/>
+  <property name="jboss.farm"    value="${jboss.all}/farm"/>
+ --> 
+
+  <!-- dist properties -->
+  <property name="dist.dir"            value="${basedir}/dist"/>
+  <property name="client.dist"         value="${dist.dir}/client"/>
+  <property name="server.dist"         value="${dist.dir}/server"/>
+  <property name="server.dist.deploy"  value="${dist.dir}/server/deploy"/>
+  <property name="server.dist.lib.ext"  value="${dist.dir}/server/lib/ext"/>
+  <property name="webservice.dist"      value="${dist.dir}/webservice"/>
+  <property name="web-inf.dir"         value="${server.dist}/WEB-INF"/>
+  <property name="web-inf-lib.dir"     value="${web-inf.dir}/lib"/>	
+
+
+  <!-- build properties -->
+  <property name="build.dir"            value="${basedir}/build"/>
+  <property name="client.build"         value="${build.dir}/client"/>
+  <property name="server.build"         value="${build.dir}/server"/>
+  <!-- property name="build.minor"        value=read from the build.properties/ -->
+
+  <property name="lib" 		value="${basedir}/lib"/>
+  <property name="jboss.pf.client.jarfile" value="jboss-6.0-pfclient.jar"/>
+  
+  <property name="callbooker.dir.name" value="UI/JCallbooker"/>	
+  <property name="callbooker.basedir"	value="${basedir}/../${callbooker.dir.name}"/>	
+	
+  <property name="debug"        value="yes"/>
+  <property name="optimize"     value="no"/>
+  <property name="pfitaxi_jar_file"    value="ospitaxi_interface.jar"/>
+  <property name="pfitaxi_clusterjar_file"    value="C_ospitaxi_interface.jar"/>
+	
+	<property name="pfrest_war_file"    value="pfrestapi.war"/>
+	<property name="pfrest_lib_file"    value="pfrestlib.jar"/>	
+	<property name="pfrest_ejb_file"    value="pfrestEJBs.jar"/>
+	<property name="pfrest_ear_file"    value="pfrestApplication.ear"/>
+  
+	
+   <property name="callbooker.wslookup.package" 	value="com.dds.pathfinder.itaxiinterface.wslookup"/>
+   <property name="wsdl.file" 	value="${dist.dir}/server/data/wsdl/CallbookerAddressLookup.wsdl"/>
+   <property name="wsdl.location" 	value="../server/default/data/wsdl/CallbookerAddressLookup.wsdl"/>	
+
+
+  <!-- Define the classpath for some of the targets.
+       In this example, we do it (somewhat redundantly) two different ways
+       with a fileset and a pathelement.  Can't use DSTAMP here because
+       it has no value at this point.  The "init" target hasn't been executed.
+  -->
+
+	  <path id="webservice.classpath">
+	  	<!--
+	  	<pathelement path="${lib}/${jboss.pf.client.jarfile}"/>
+	  	<pathelement path="${lib}/jbossws-spi.jar"/>
+	  	-->
+	  	<pathelement path="${lib}/jboss-client.jar"/>
+		<pathelement path="${lib}/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
+	  	<pathelement path="${lib}/jboss-ejb3-ext-api-2.1.0.jar"/>
+	  	<pathelement path="${lib}/jbossws-api-1.0.2.Final.jar"/>
+	  	<pathelement path="${lib}/jackson-annotations-2.4.1.jar"/>
+	  	<pathelement path="${lib}/jackson-databind-2.4.1.jar"/>
+		<pathelement path="${lib}/jackson-core-2.4.1.jar"/>
+	  	<pathelement path="${lib}/jaxrs-api-3.0.10.Final.jar"/>
+	  	<pathelement path="${lib}/jboss-servlet-api_3.1_spec-1.0.0.Final.jar"/>
+	  	<pathelement path="${lib}/log4j.jar"/>
+	  	<pathelement path="${lib}/cxf-api.jar"/>
+	  	<pathelement path="${lib}/CallbookerServerLib.jar"/>
+	  	<pathelement path="${lib}/commons-logging-1.1.3.jar"/>
+	  	<pathelement path="${lib}/httpasyncclient-4.0.jar"/>
+	  	<pathelement path="${lib}/commons-codec-1.6.jar"/>
+	  	<pathelement path="${lib}/httpasyncclient-cache-4.0.jar"/>
+	  	<pathelement path="${lib}/httpclient-4.3.1.jar"/>
+	  	<pathelement path="${lib}/httpclient-cache-4.3.1.jar"/>
+	  	<pathelement path="${lib}/httpcore-4.3.jar"/>
+	  	<pathelement path="${lib}/httpcore-nio-4.3.jar"/>
+	  	<!--
+	  	<pathelement path="${lib}/ojdbc6.jar"/>
+	  	<pathelement path="${lib}/ironjacamar-jdbc-1.1.9.Final.jar"/>
+	  	-->
+	  </path>
+	
+	  <path id="pf365.webservice.classpath">
+	  	<pathelement path="${lib}/${jboss.pf.client.jarfile}"/>
+	  	<pathelement path="${lib}/jbossws-spi.jar"/>
+	  	<pathelement path="${lib}/log4j.jar"/>
+	  	<pathelement path="${lib}/pf365/CallbookerServerLib.jar"/>
+	  </path>
+	
+	 <path id="jboss.wsconsume.classpath">
+	 	<pathelement path="${lib}/${jboss.pf.client.jarfile}"/>
+	 	<pathelement location="${lib}/jbossws-spi.jar"/>
+	 	<pathelement location="${lib}/stax-ex.jar"/>
+	 	<pathelement location="${lib}/streambuffer.jar"/>
+	 	<pathelement location="${lib}/jaxws-tools.jar"/>
+	 	<pathelement location="${lib}/jaxws-rt.jar"/>
+	 	<pathelement location="${lib}/jaxb-xjc.jar"/>
+	 	<pathelement location="${lib}/jaxb-impl.jar"/>
+	 	<pathelement location="${lib}/policy.jar"/>
+	 	<pathelement location="${lib}/jbossws-native-core.jar"/>
+	 	<pathelement location="${lib}/jbossws-common.jar"/>
+	 	<pathelement location="${lib}/wstx-lgpl.jar"/>
+	 </path>
+	
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+  	<mkdir dir="${classes.dir}"/>
+  </target>
+
+
+
+
+
+
+  <target name="dist" depends="package_ws_pfitaxi, package_pfrest_ear">
+  </target>
+	
+
+	<target name="deploy-local-machine" depends = "dist">
+		<mkdir dir="${jboss.deploy}/ext"/>
+		<copy file="${server.dist.deploy}/ext/CallbookerServerLib.jar" todir="${jboss.deploy}/ext" />
+		<copy file="${server.dist.deploy}/${callbooker.ejb.jarfile}" todir="${jboss.deploy}" />
+		<!--
+		<copy file="${server.dist.deploy}/${ddssarfile}" todir="${jboss.deploy}" />
+		-->
+	</target>
+	
+
+ 
+
+    <target name="archive" depends="getBuildVersion">	
+        <mkdir dir="${client.build}"/>
+
+
+        <zip zipfile="${client.build}/JCallbookerClient${build.major}${build.minor}.zip">
+            <fileset dir="${client.dist}" excludes="meta-inf/"/>
+        </zip>
+        <mkdir dir="${server.build}"/>
+        <zip zipfile="${server.build}/JCallbookerServer${build.major}${build.minor}.zip">
+            <fileset dir="${server.dist}" excludes="deploy/${callbooker.clustedejb.jarfile},meta-inf/,cluster-meta-inf/"/>
+        </zip>
+        <zip zipfile="${server.build}/JCallbookerServerClust${build.major}${build.minor}.zip">
+            <fileset dir="${server.dist}" excludes="deploy/${callbooker.ejb.jarfile},meta-inf/,cluster-meta-inf/"/>
+        </zip>
+        <antcall target="web"/>
+    </target>
+
+
+    <target name="clean">
+        <delete dir="${src.dir}/com"/>
+        <delete dir="${classes.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <target name="getSource">
+	
+        <antcall target="getSourceChanges"/>
+
+
+        <vssget vsspath="${vss.path.src}" login="${vss.user},${vss.pwd}" localpath="${src.dir}"
+                serverPath="${vss.server}" autoresponse="Y" recursive="true"/>
+	
+
+        <vssget vsspath="${vss.path.dist}" login="${vss.user},${vss.pwd}" localpath="${dist.dir}"
+                serverPath="${vss.server}" autoresponse="Y" recursive="true"/>
+    	
+        <vssget vsspath="${vss.path.lib}" login="${vss.user},${vss.pwd}" localpath="${lib}"
+                serverPath="${vss.server}" autoresponse="Y" recursive="true"/>    	
+    </target>
+
+
+    <target name="getBuildVersion">
+
+        <vsscheckout vsspath="${vss.path.build}/build.properties" login="${vss.user},${vss.pwd}" localpath="${build.dir}"
+             serverPath="${vss.server}" recursive="false"/>
+
+        <propertyfile file="${build.dir}/build.properties">
+	        <entry key="build.minor" type="int" operation="+" value="1" pattern="000"/>
+        </propertyfile>
+        <property file="${build.dir}/build.properties"/>
+
+        <echo message= "Build ${build.minor}"/>
+
+        <vsscheckin vsspath="${vss.path.build}/build.properties" login="${vss.user},${vss.pwd}" localpath="${build.dir}"
+             serverPath="${vss.server}" comment="Updated version number"/> 
+    </target>
+
+
+    <target name="labelSource" depends="getBuildVersion">
+
+        <echo message= "${build.label} ${build.major}${build.minor}"/>
+
+        <vsslabel vsspath="${vss.path}" login="${vss.user},${vss.pwd}"
+            serverPath="${vss.server}" label="${build.label} ${build.major}${build.minor}"/>
+    </target>
+
+
+    <target name="getSourceChanges">
+        <delete file="summary.txt"/>
+
+        <tstamp>
+            <format property="to.tstamp" pattern="M-d-yy;h:mma" />
+        </tstamp>
+
+		
+        <!-- vsshistory vsspath="${vss.path}" login="${vss.user},${vss.pwd}"
+                serverPath="${vss.server}" numdays="${vss.numdays}"
+                dateFormat="M-d-yy;h:mma" toDate="${to.tstamp}"
+                output="summary.txt" recursive="true"/ -->
+
+
+        <!-- property file="${build.dir}/build.properties"/ -->
+        <!-- vsshistory vsspath="${vss.path}" login="${vss.user},${vss.pwd}"
+                serverPath="${vss.server}" fromLabel="${build.label} ${build.major}${build.minor}"
+                output="summary.txt" recursive="true"/ -->
+
+        <delete file="tempbuild"/>
+
+    </target>
+	
+	<target name="autobuild" depends="dist"/>
+	<!--target name="autobuild" depends="clean, getSource, dist, labelSource"/-->
+	
+	<target name="wscompile" depends="init">
+	    <echo message="debug=${debug},optimize=${optimize}"/>
+	    <!-- Compile the server code from ${src} into ${classes} -->
+		<copy file="${callbooker.basedir}/dist/client/CallbookerServerLib.jar" todir="${lib}" force="true" failonerror="false"/> 
+		<delete dir="${classes.dir}/com"/>
+	    <javac srcdir="${webservice.src}" destdir="${classes.dir}" debug="${debug}" optimize="${optimize}" encoding="iso-8859-1">
+	        <classpath refid="webservice.classpath"/>
+	    </javac>
+	 </target>
+	
+	<target name="pf365.wscompile" depends="init">
+	    <echo message="debug=${debug},optimize=${optimize}"/>
+	    <!-- Compile the server code from ${src} into ${classes} -->
+	    <javac srcdir="${webservice.src}" destdir="${classes.dir}" debug="${debug}" optimize="${optimize}">
+	        <classpath refid="pf365.webservice.classpath"/>
+	    </javac>
+	 </target>
+	
+	<target name="package_ws_pfitaxi" depends="wscompile">
+		<jar jarfile="${dist.dir}/${pfitaxi_jar_file}" manifest="${server.dist}/meta-inf/Manifest.mf">
+			<fileset dir="${classes.dir}">
+			    <include name="com/dds/pathfinder/itaxiinterface/**/*.class"/>
+				<include name="paymentgateway/dds/com/webservice/**/*.class"/>			
+				<exclude name="com/dds/pathfinder/itaxiinterface/**/CLST_*.class"/>
+			</fileset>
+		</jar>
+	</target>
+	
+	<target name="package_pfrest_lib" depends="wscompile">
+			<jar jarfile="${web-inf-lib.dir}/${pfrest_lib_file}" manifest="${server.dist}/meta-inf/Manifest.mf">
+				<fileset dir="${classes.dir}">
+					<include name="com/dds/pathfinder/itaxiinterface/util/*.class"/>			
+					<include name="com/dds/pathfinder/itaxiinterface/webservice/Attribute.class"/>
+				</fileset>
+			</jar>
+	</target>
+		
+	<target name="package_ws_pfrest" depends="package_pfrest_lib">
+			<war destfile="${server.dist}/${pfrest_war_file}" webxml="${web-inf.dir}/web.xml" manifest="${server.dist}/meta-inf/Manifest.mf">
+				<classes dir="${classes.dir}">
+					<include name="com/dds/pathfinder/itaxiinterface/common/impl/*.class"/>
+					<include name="com/dds/pathfinder/itaxiinterface/wslookup/*.class"/>
+					<include name="com/dds/pathfinder/pfrest/**/*.class"/>	
+					<exclude name="com/dds/pathfinder/pfrest/scheduletask/*.class"/>
+					<exclude name="com/dds/pathfinder/pfrest/events/*.class" />
+					<exclude name="com/dds/pathfinder/pfrest/deviceevents/*.class" />
+				</classes>	
+				<!--
+				<lib dir="${web-inf-lib.dir}">
+				    <include name="${pfrest_lib_file}"/>
+				</lib>
+				-->
+			</war>
+	</target>
+	
+	<target name="package_pfrest_ejb" depends="wscompile">
+		<jar jarfile="${server.dist}/${pfrest_ejb_file}">  
+		            <fileset dir="${classes.dir}">
+		            	<include name="com/dds/pathfinder/pfrest/scheduletask/*.class" />
+		            	<include name="com/dds/pathfinder/pfrest/events/*.class" />
+		            	<include name="com/dds/pathfinder/pfrest/deviceevents/*.class" />
+		            	<include name="com/dds/pathfinder/pfrest/resources/PFResource*.class" />
+		            	<include name="com/dds/pathfinder/pfrest/resources/PaymentListItem.class" />
+		            </fileset>
+		</jar>		
+	</target>
+	
+	<target name="package_pfrest_ear" depends="package_ws_pfrest, package_pfrest_ejb">
+		<ear earfile="${dist.dir}/${pfrest_ear_file}" appxml="${server.dist}/meta-inf/application.xml" manifest="${server.dist}/meta-inf/Manifest.mf">
+			<zipfileset dir="${web-inf-lib.dir}" prefix="lib">
+			      <include name="${pfrest_lib_file}"/>
+			</zipfileset>
+			<fileset dir="${server.dist}" includes="${pfrest_ejb_file}"/>
+			<fileset dir="${server.dist}" includes="${pfrest_war_file}"/>
+		</ear>	
+	</target>
+	
+	<target name="deploy-pfrestear-local" depends = "package_pfrest_ear">
+				<copy file="${dist.dir}/${pfrest_ear_file}" todir="${jboss.deploy}" />	
+	</target>
+	
+	<target name="package_ws_pfitaxi_pf365" depends="pf365.wscompile">
+			<jar jarfile="${dist.dir}/${pfitaxi_jar_file}" manifest="${server.dist}/meta-inf/Manifest.mf">
+				<fileset dir="${classes.dir}">
+				    <include name="com/dds/pathfinder/itaxiinterface/**/*.class"/>  
+					<exclude name="com/dds/pathfinder/itaxiinterface/**/CLST_*.class"/>
+				</fileset>
+			</jar>
+		</target>
+	
+	<target name="package_cluster_ws_pfitaxi" depends="wscompile">
+		<!--
+			<jar jarfile="${dist.dir}/${pfitaxi_clusterjar_file}" manifest="${server.dist}/meta-inf/Manifest.mf">
+				<fileset dir="${classes.dir}">
+				    <include name="com/dds/pathfinder/itaxiinterface/**/*.class"/>
+					<include name="paymentgateway/dds/com/webservice/**/*.class"/>
+					<exclude name="com/dds/pathfinder/itaxiinterface/**/PFiTaxiServiceBean.class"/>
+				</fileset>
+			</jar>
+		-->	
+	</target>
+	
+	
+	
+	<target name="deploy-ws-local" depends = "package_ws_pfitaxi">
+		<copy file="${dist.dir}/${pfitaxi_jar_file}" todir="${jboss.deploy}" />
+		
+	</target>	
+	
+	<target name="deploy-clusterws-local" depends = "package_cluster_ws_pfitaxi">
+		<!--
+			<copy file="${dist.dir}/${pfitaxi_clusterjar_file}" todir="${jboss.all.deploy}" />
+		-->
+	</target>
+
+	<target name="wsdlconsume">
+		<taskdef name="wsconsume" classname="org.jboss.wsf.spi.tools.ant.WSConsumeTask">
+			<classpath refid="jboss.wsconsume.classpath"/>
+		</taskdef>
+		<wsconsume 
+		  fork="false"
+		  verbose="true"
+		  destdir="${classes.dir}"
+		  sourcedestdir="${src.dir}"
+		  package="${callbooker.wslookup.package}"	
+		  keep="true" 
+		  wsdllocation="${wsdl.location}"
+		  wsdl="${wsdl.file}">
+		</wsconsume>
+
+	</target>	
+	
+</project>

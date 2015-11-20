@@ -1,0 +1,71 @@
+<pfwebservices>
+	<webservice name="RideCharge">
+		<companyID>2</companyID>
+		<wsdl></wsdl>
+		<security></security>
+		<attributes>
+			<attribute name="activateGetDriverID" value="true"/>
+			<attribute name="pathfinderversion" value="3.72"/>
+			<attribute name="username" value="sysadmin"/>
+			<attribute name="pathword" value="33213957"/>
+			<attribute name="httpConnectionTimeout" value="10000"/>
+			<attribute name="httpConnectionsToPost" value="200"/>
+			<attribute name="maxRecordsPerBatch" value="5000"/>
+			<attribute name="maxBatchPerTask" value="4"/>
+			<attribute name="eventScanFreqInSec" value="5"/>
+			<attribute name="excludeFromTripNotify" value="phonenum,phoneext,passenger_name,pickup_address,dropoff_address"/>
+		</attributes>
+	</webservice>
+	<webservice name="DW-NavigationService-Http">
+		<companyID>2</companyID>
+		<wsdl></wsdl>
+		<security></security>
+		<attributes>
+			<attribute name="dwns-wsdl-URL-1" value="http://localhost:8001/NavigationService/?wsdl"/>
+		</attributes>
+	</webservice>
+	<webservice name="BasicHttpBinding_IAddressLookup">
+		<companyID>2</companyID>
+		<wsdl></wsdl>
+		<security></security>
+		<attributes>
+			
+			<attribute name="orderby-in-findaddress" value="(2)(Favourite:V)(0)(1)(NUM)(5)(NULLS FIRST)"/>
+			
+		</attributes>
+	</webservice>
+	<webservice name="OSPService">
+		<companyID>2</companyID>
+		<wsdl></wsdl>
+		<security></security>
+		<attributes>
+			<attribute name="orderby-in-findaddress" value="(0)(1)(NUM)(5)(NULLS FIRST)(2)"/>
+		</attributes>
+		<tssAttrMapping>
+			<tssAttribute name="DA" pfAttribute="DAPPLE"/>
+			<tssAttribute name="DB" pfAttribute="DBLUEBERRY"/>
+			<tssAttribute name="VA" pfAttribute="VAMERICAN"/>
+			<tssAttribute name="VB" pfAttribute="VBURMESE"/>
+		</tssAttrMapping>
+	</webservice>
+	<webservice name="PFRestService">
+		<companyID>2</companyID>
+		<wsdl></wsdl>
+		<security></security>
+		<attributes>
+			<attribute name="transit-gateway-host-url" value="http://localhost:8080/testrest/xmlsimulator/simulator/echo_json_post"/>
+			<!-- attribute name="transit-gateway-host-url" value="http://10.0.2.122:10099/tgapi/v1/TSID/SUTISAMPLANTransit/Events"/ -->
+		    <attribute name="pfnotify-recipients" value="TG,S1,S2"/>
+			<attribute name="transit-scan-event-in-sec" value="0"/>
+			<attribute name="post-alive-frequency-in-sec" value="600"/>
+			<attribute name="input-attributes-validate" value="Y"/>
+			<attribute name="suti-transport-id-digits" value="7"/>
+			<attribute name="sd-notify-gateway-host-url" value="http://localhost:8080/testrest/xmlsimulator/simulator/echo_json_post"/>
+			<attribute name="sd-scan-event-in-sec" value="600"/>
+			<attribute name="sd-joboffer-json-file" value="joboffer-sd.json"/>
+			<attribute name="sd-notify-joboffer-host-url" value="http://localhost:8080/testrest/xmlsimulator/simulator/echo_json_post"/>
+			<attribute name="sd-notify-outvehicle-host-url" value="http://localhost:8080/testrest/xmlsimulator/simulator/echo_json_post"/>
+			<attribute name="2nd-dev-notify-recipients" value="SD"/>
+		</attributes>
+	</webservice>
+</pfwebservices>

@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:i0="http://DDSAddressConnectionManagerService" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://tempuri.org/" name="CallbookerAddressLookup">
+<wsdl:import location="http://10.0.4.25:8011/AddressLookupService?wsdl=wsdl0" namespace="http://DDSAddressConnectionManagerService"/>
+<wsdl:types/>
+<wsdl:binding name="BasicHttpBinding_IAddressLookup" type="i0:IAddressLookup">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="GetAddressData">
+<soap:operation style="document" soapAction="http://DDSAddressConnectionManagerService/IAddressLookup/GetAddressData"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetRegionData">
+<soap:operation style="document" soapAction="http://DDSAddressConnectionManagerService/IAddressLookup/GetRegionData"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetClosestAddressData">
+<soap:operation style="document" soapAction="http://DDSAddressConnectionManagerService/IAddressLookup/GetClosestAddressData"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetClosestAddressDataRelative">
+<soap:operation style="document" soapAction="http://DDSAddressConnectionManagerService/IAddressLookup/GetClosestAddressDataRelative"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetDirections">
+<soap:operation style="document" soapAction="http://DDSAddressConnectionManagerService/IAddressLookup/GetDirections"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetLandmarkData">
+<soap:operation style="document" soapAction="http://DDSAddressConnectionManagerService/IAddressLookup/GetLandmarkData"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetAreaAddress">
+<soap:operation style="document" soapAction="http://DDSAddressConnectionManagerService/IAddressLookup/GetAreaAddress"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetAddressDataStreets">
+<soap:operation style="document" soapAction="http://DDSAddressConnectionManagerService/IAddressLookup/GetAddressDataStreets"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="TestService">
+<soap:operation style="document" soapAction="http://DDSAddressConnectionManagerService/IAddressLookup/TestService"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="DumpData">
+<soap:operation style="document" soapAction="http://DDSAddressConnectionManagerService/IAddressLookup/DumpData"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="GetAreaIDForGPS">
+<soap:operation style="document" soapAction="http://DDSAddressConnectionManagerService/IAddressLookup/GetAreaIDForGPS"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="CallbookerAddressLookup">
+<wsdl:port name="BasicHttpBinding_IAddressLookup" binding="tns:BasicHttpBinding_IAddressLookup">
+<soap:address location="http://10.0.4.25:8011/AddressLookupService"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

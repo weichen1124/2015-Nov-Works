@@ -1,0 +1,601 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="PaymentGatewayService" targetNamespace="http://com.dds.paymentgateway/webservice/paymentservice" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://com.dds.paymentgateway/webservice/paymentservice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.dds.paymentgateway/webservice/paymentservice" xmlns:tns="http://com.dds.paymentgateway/webservice/paymentservice" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Test_GeneratePayload_MDTCreditCard" type="tns:Test_GeneratePayload_MDTCreditCard"/>
+  <xs:element name="Test_GeneratePayload_MDTCreditCardResponse" type="tns:Test_GeneratePayload_MDTCreditCardResponse"/>
+  <xs:element name="Test_GeneratePayload_Tokenization" type="tns:Test_GeneratePayload_Tokenization"/>
+  <xs:element name="Test_GeneratePayload_TokenizationResponse" type="tns:Test_GeneratePayload_TokenizationResponse"/>
+  <xs:element name="Test_KeyExchange" type="tns:Test_KeyExchange"/>
+  <xs:element name="Test_KeyExchangeResponse" type="tns:Test_KeyExchangeResponse"/>
+  <xs:element name="serviceAccount" type="tns:serviceAccount"/>
+  <xs:element name="serviceAccountResponse" type="tns:serviceAccountResponse"/>
+  <xs:element name="serviceCreditCard" type="tns:serviceCreditCard"/>
+  <xs:element name="serviceCreditCardResponse" type="tns:serviceCreditCardResponse"/>
+  <xs:element name="serviceEMVCard" type="tns:serviceEMVCard"/>
+  <xs:element name="serviceEMVCardResponse" type="tns:serviceEMVCardResponse"/>
+  <xs:element name="serviceKeyExchange" type="tns:serviceKeyExchange"/>
+  <xs:element name="serviceKeyExchangeResponse" type="tns:serviceKeyExchangeResponse"/>
+  <xs:element name="servicePayment" type="tns:servicePayment"/>
+  <xs:element name="servicePaymentResponse" type="tns:servicePaymentResponse"/>
+  <xs:element name="serviceToken" type="tns:serviceToken"/>
+  <xs:element name="serviceTokenResponse" type="tns:serviceTokenResponse"/>
+  <xs:element name="tokenization" type="tns:tokenization"/>
+  <xs:element name="tokenizationResponse" type="tns:tokenizationResponse"/>
+  <xs:complexType name="serviceKeyExchange">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="KeyExchangeRequestType" type="tns:KeyExchangeRequestType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="extension restriction" name="KeyExchangeRequestType">
+    <xs:sequence>
+      <xs:element form="qualified" name="CompanyID" type="xs:int"/>
+      <xs:element form="qualified" name="Password" type="xs:string"/>
+      <xs:element form="qualified" name="MID" type="xs:string"/>
+      <xs:element form="qualified" name="Payload" type="xs:string"/>
+      <xs:element form="qualified" name="MobileBooker" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serviceKeyExchangeResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="KeyExchangeResponseType" type="tns:KeyExchangeResponseType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="extension restriction" name="KeyExchangeResponseType">
+    <xs:sequence>
+      <xs:element form="qualified" name="MID" type="xs:string"/>
+      <xs:element form="qualified" name="Payload" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="servicePayment">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="PaymentRequestType" type="tns:PaymentRequestType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="extension restriction" name="PaymentRequestType">
+    <xs:sequence>
+      <xs:element form="qualified" name="CompanyID" type="xs:int"/>
+      <xs:element form="qualified" name="Password" type="xs:string"/>
+      <xs:element form="qualified" name="ReqType" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CustomerID" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="AdminID" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CardType" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="PaymentType" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="PNRef" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="AccountCode" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CardNumber" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="ExpiryDate" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CVV" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="MagData" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="FinalAmount" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="ZipCode" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="TransDTM" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Info_1" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Info_2" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Info_3" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Info_4" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Info_5" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="MeterFare" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="FixedPrice" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="RunIn" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Tip" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Expense1" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Expense2" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Layout" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="PreBookingFee" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="ASAPBookingFee" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="AdminFee" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CreditTransFee" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="FixedMarkup" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Uplift" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="DriverPayment" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Remarks" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CustomerPassword" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Info_6" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Info_7" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="servicePaymentResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="PaymentResponseType" type="tns:PaymentResponseType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="extension restriction" name="PaymentResponseType">
+    <xs:sequence>
+      <xs:element form="qualified" name="TransactionID" type="xs:long"/>
+      <xs:element form="qualified" name="ResponseCode" type="xs:int"/>
+      <xs:element form="qualified" name="ResponseMSG" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="PNRef" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="BatchNr" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Message" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="AuthCode" type="xs:string"/>
+      <xs:element form="qualified" name="Balance" type="xs:double"/>
+      <xs:element form="qualified" minOccurs="0" name="ExtData" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CardType" type="xs:string"/>
+      <xs:element form="qualified" name="ReqAmt" type="xs:double"/>
+      <xs:element form="qualified" name="AuthAmt" type="xs:double"/>
+      <xs:element form="qualified" name="Validation" type="xs:boolean"/>
+      <xs:element form="qualified" minOccurs="0" name="CardHolderName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Test_GeneratePayload_MDTCreditCard">
+    <xs:sequence>
+      <xs:element form="qualified" name="companyId" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="password" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="mid" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="seqNum" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="reqType" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="cardNr" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="expiryDate" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="magData" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="amount" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Test_GeneratePayload_MDTCreditCardResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Test_GeneratePayload_Tokenization">
+    <xs:sequence>
+      <xs:element form="qualified" name="companyId" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="password" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="deviceId" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="seqNum" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="cardNr" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="cardHolderName" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="expiryDate" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="zip" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="email" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Test_GeneratePayload_TokenizationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tokenization">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="TokenizationRequestType" type="tns:TokenizationRequestType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="extension restriction" name="TokenizationRequestType">
+    <xs:sequence>
+      <xs:element form="qualified" name="CompanyID" type="xs:int"/>
+      <xs:element form="qualified" name="Password" type="xs:string"/>
+      <xs:element form="qualified" name="DeviceID" type="xs:string"/>
+      <xs:element form="qualified" name="Payload" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tokenizationResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="TokenizationResponseType" type="tns:TokenizationResponseType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TokenizationResponseType">
+    <xs:sequence>
+      <xs:element form="qualified" name="Payload" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serviceEMVCard">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="EMVCardRequestType" type="tns:EMVCardRequestType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="extension restriction" name="EMVCardRequestType">
+    <xs:sequence>
+      <xs:element form="qualified" name="CompanyID" type="xs:int"/>
+      <xs:element form="qualified" name="Password" type="xs:string"/>
+      <xs:element form="qualified" name="MID" type="xs:string"/>
+      <xs:element form="qualified" name="Payload" type="xs:string"/>
+      <xs:element form="qualified" name="Info_1" type="xs:string"/>
+      <xs:element form="qualified" name="Info_2" type="xs:string"/>
+      <xs:element form="qualified" name="Info_3" type="xs:string"/>
+      <xs:element form="qualified" name="Info_4" type="xs:string"/>
+      <xs:element form="qualified" name="Info_5" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serviceEMVCardResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="EMVCardResponseType" type="tns:EMVCardResponseType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="extension restriction" name="EMVCardResponseType">
+    <xs:sequence>
+      <xs:element form="qualified" name="MID" type="xs:string"/>
+      <xs:element form="qualified" name="Payload" type="xs:string"/>
+      <xs:element form="qualified" name="TransactionID" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Test_KeyExchange">
+    <xs:sequence>
+      <xs:element form="qualified" name="CompanyID" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Password" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="DeviceID" type="xs:string"/>
+      <xs:element form="qualified" name="MobileBooker" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Test_KeyExchangeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:KeyExchangeResponseType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serviceAccount">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="AcctSyncRequestType" type="tns:AcctSyncRequestType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="extension restriction" name="AcctSyncRequestType">
+    <xs:sequence>
+      <xs:element form="qualified" maxOccurs="unbounded" name="CompanyList" type="tns:CompanyItemType"/>
+      <xs:element form="qualified" name="RequestType" type="xs:int"/>
+      <xs:element form="qualified" name="AccountNumber" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="AccountName" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="ActiveRecord" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Organization" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Description" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="ContactName" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="ContactPhone" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="AreaCode" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Ext" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="ContactEmail" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="ExpiryDate" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Limit" type="xs:double"/>
+      <xs:element form="qualified" minOccurs="0" name="Balance" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="extension restriction" name="CompanyItemType">
+    <xs:sequence>
+      <xs:element form="qualified" name="CompanyID" type="xs:int"/>
+      <xs:element form="qualified" name="Password" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serviceAccountResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="AcctSyncResponseType" type="tns:AcctSyncResponseType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="extension restriction" name="AcctSyncResponseType">
+    <xs:sequence>
+      <xs:element form="qualified" name="ResponseCode" type="xs:int"/>
+      <xs:element form="qualified" name="ResponseMSG" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serviceToken">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="TokenPaymentRequestType" type="tns:TokenPaymentRequestType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="extension restriction" name="TokenPaymentRequestType">
+    <xs:sequence>
+      <xs:element form="qualified" name="CompanyID" type="xs:int"/>
+      <xs:element form="qualified" name="Password" type="xs:string"/>
+      <xs:element form="qualified" name="DeviceID" type="xs:string"/>
+      <xs:element form="qualified" name="SeqNum" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="TransDTM" type="xs:string"/>
+      <xs:element form="qualified" name="ReqType" type="xs:string"/>
+      <xs:element form="qualified" name="Token" type="xs:string"/>
+      <xs:element form="qualified" name="Amount" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Tip" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Info1" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Info2" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Info3" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Info4" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Info5" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serviceTokenResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="TokenPaymentResponseType" type="tns:TokenPaymentResponseType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="extension restriction" name="TokenPaymentResponseType">
+    <xs:sequence>
+      <xs:element form="qualified" name="seqNum" type="xs:string"/>
+      <xs:element form="qualified" name="ResponseCode" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="ResponseMSG" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="AuthCode" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="referenceNum" type="xs:string"/>
+      <xs:element form="qualified" name="emailSent" type="xs:boolean"/>
+      <xs:element form="qualified" minOccurs="0" name="email" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serviceCreditCard">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="CreditCardRequestType" type="tns:CreditCardRequestType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="extension restriction" name="CreditCardRequestType">
+    <xs:sequence>
+      <xs:element form="qualified" name="CompanyID" type="xs:int"/>
+      <xs:element form="qualified" name="Password" type="xs:string"/>
+      <xs:element form="qualified" name="MID" type="xs:string"/>
+      <xs:element form="qualified" name="Payload" type="xs:string"/>
+      <xs:element form="qualified" name="Info_1" type="xs:string"/>
+      <xs:element form="qualified" name="Info_2" type="xs:string"/>
+      <xs:element form="qualified" name="Info_3" type="xs:string"/>
+      <xs:element form="qualified" name="Info_4" type="xs:string"/>
+      <xs:element form="qualified" name="Info_5" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serviceCreditCardResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="CreditCardResponseType" type="tns:CreditCardResponseType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType final="extension restriction" name="CreditCardResponseType">
+    <xs:sequence>
+      <xs:element form="qualified" name="MID" type="xs:string"/>
+      <xs:element form="qualified" name="Payload" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="IllegalStateException" type="tns:IllegalStateException"/>
+  <xs:complexType name="IllegalStateException">
+    <xs:sequence/>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="serviceCreditCard">
+    <wsdl:part element="tns:serviceCreditCard" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serviceKeyExchangeResponse">
+    <wsdl:part element="tns:serviceKeyExchangeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serviceAccount">
+    <wsdl:part element="tns:serviceAccount" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serviceAccountResponse">
+    <wsdl:part element="tns:serviceAccountResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Test_GeneratePayload_MDTCreditCardResponse">
+    <wsdl:part element="tns:Test_GeneratePayload_MDTCreditCardResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="tokenizationResponse">
+    <wsdl:part element="tns:tokenizationResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Test_GeneratePayload_MDTCreditCard">
+    <wsdl:part element="tns:Test_GeneratePayload_MDTCreditCard" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serviceEMVCardResponse">
+    <wsdl:part element="tns:serviceEMVCardResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Test_GeneratePayload_TokenizationResponse">
+    <wsdl:part element="tns:Test_GeneratePayload_TokenizationResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="servicePayment">
+    <wsdl:part element="tns:servicePayment" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serviceKeyExchange">
+    <wsdl:part element="tns:serviceKeyExchange" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serviceToken">
+    <wsdl:part element="tns:serviceToken" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serviceEMVCard">
+    <wsdl:part element="tns:serviceEMVCard" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IllegalStateException">
+    <wsdl:part element="tns:IllegalStateException" name="IllegalStateException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Test_GeneratePayload_Tokenization">
+    <wsdl:part element="tns:Test_GeneratePayload_Tokenization" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Test_KeyExchange">
+    <wsdl:part element="tns:Test_KeyExchange" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serviceTokenResponse">
+    <wsdl:part element="tns:serviceTokenResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="tokenization">
+    <wsdl:part element="tns:tokenization" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="serviceCreditCardResponse">
+    <wsdl:part element="tns:serviceCreditCardResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="servicePaymentResponse">
+    <wsdl:part element="tns:servicePaymentResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Test_KeyExchangeResponse">
+    <wsdl:part element="tns:Test_KeyExchangeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="PaymentGatewayServiceInterface">
+    <wsdl:operation name="serviceKeyExchange">
+      <wsdl:input message="tns:serviceKeyExchange" name="serviceKeyExchange">
+    </wsdl:input>
+      <wsdl:output message="tns:serviceKeyExchangeResponse" name="serviceKeyExchangeResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:IllegalStateException" name="IllegalStateException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="servicePayment">
+      <wsdl:input message="tns:servicePayment" name="servicePayment">
+    </wsdl:input>
+      <wsdl:output message="tns:servicePaymentResponse" name="servicePaymentResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:IllegalStateException" name="IllegalStateException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Test_GeneratePayload_MDTCreditCard">
+      <wsdl:input message="tns:Test_GeneratePayload_MDTCreditCard" name="Test_GeneratePayload_MDTCreditCard">
+    </wsdl:input>
+      <wsdl:output message="tns:Test_GeneratePayload_MDTCreditCardResponse" name="Test_GeneratePayload_MDTCreditCardResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Test_GeneratePayload_Tokenization">
+      <wsdl:input message="tns:Test_GeneratePayload_Tokenization" name="Test_GeneratePayload_Tokenization">
+    </wsdl:input>
+      <wsdl:output message="tns:Test_GeneratePayload_TokenizationResponse" name="Test_GeneratePayload_TokenizationResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="tokenization">
+      <wsdl:input message="tns:tokenization" name="tokenization">
+    </wsdl:input>
+      <wsdl:output message="tns:tokenizationResponse" name="tokenizationResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="serviceEMVCard">
+      <wsdl:input message="tns:serviceEMVCard" name="serviceEMVCard">
+    </wsdl:input>
+      <wsdl:output message="tns:serviceEMVCardResponse" name="serviceEMVCardResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Test_KeyExchange">
+      <wsdl:input message="tns:Test_KeyExchange" name="Test_KeyExchange">
+    </wsdl:input>
+      <wsdl:output message="tns:Test_KeyExchangeResponse" name="Test_KeyExchangeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="serviceAccount">
+      <wsdl:input message="tns:serviceAccount" name="serviceAccount">
+    </wsdl:input>
+      <wsdl:output message="tns:serviceAccountResponse" name="serviceAccountResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:IllegalStateException" name="IllegalStateException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="serviceToken">
+      <wsdl:input message="tns:serviceToken" name="serviceToken">
+    </wsdl:input>
+      <wsdl:output message="tns:serviceTokenResponse" name="serviceTokenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="serviceCreditCard">
+      <wsdl:input message="tns:serviceCreditCard" name="serviceCreditCard">
+    </wsdl:input>
+      <wsdl:output message="tns:serviceCreditCardResponse" name="serviceCreditCardResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:IllegalStateException" name="IllegalStateException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PaymentGatewayServiceSoapBinding" type="tns:PaymentGatewayServiceInterface">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="serviceKeyExchange">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="serviceKeyExchange">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="serviceKeyExchangeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="IllegalStateException">
+        <soap:fault name="IllegalStateException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="servicePayment">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="servicePayment">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="servicePaymentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="IllegalStateException">
+        <soap:fault name="IllegalStateException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Test_GeneratePayload_MDTCreditCard">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="Test_GeneratePayload_MDTCreditCard">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Test_GeneratePayload_MDTCreditCardResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Test_GeneratePayload_Tokenization">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="Test_GeneratePayload_Tokenization">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Test_GeneratePayload_TokenizationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="serviceEMVCard">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="serviceEMVCard">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="serviceEMVCardResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="tokenization">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="tokenization">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="tokenizationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Test_KeyExchange">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="Test_KeyExchange">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Test_KeyExchangeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="serviceAccount">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="serviceAccount">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="serviceAccountResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="IllegalStateException">
+        <soap:fault name="IllegalStateException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="serviceCreditCard">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="serviceCreditCard">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="serviceCreditCardResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="IllegalStateException">
+        <soap:fault name="IllegalStateException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="serviceToken">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="serviceToken">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="serviceTokenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PaymentGatewayService">
+    <wsdl:port binding="tns:PaymentGatewayServiceSoapBinding" name="PaymentGatewayServiceInterfacePort">
+      <soap:address location="https://192.168.50.97:8443/PaymentGatewayService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

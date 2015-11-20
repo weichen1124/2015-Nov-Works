@@ -1,0 +1,12 @@
+{
+    "typeLabel":"Job Type",
+    "zoneLabel": "Zone",
+    "areaLabel":"Area",
+    "numberOfPassengerLabel" : "Passenger",
+    "numberOfStopLabel" : "Stops",
+    "pickupAddrLabel" : "Pickup",
+    "dropoffAddrLabel" : "Dropoff",
+    "paymentTypeLabel" : "Payment",
+    "layoutAmountLabel" : "Layout",
+    "fixedPriceLabel" : "Fixed Price"
+}

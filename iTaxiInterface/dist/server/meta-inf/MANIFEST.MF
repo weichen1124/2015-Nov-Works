@@ -1,0 +1,1 @@
+Dependencies: deployment.callbookerEJBs.jar, com.dds.pflib
